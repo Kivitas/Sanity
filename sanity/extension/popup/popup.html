@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sanity</title>
+  <link rel="stylesheet" href="../pages/ui.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../assets/logo-48.png" alt="" width="36" height="36">
+    <div>
+      <h1>Sanity</h1>
+      <p class="muted tag">Keep the connection. Lose the addiction.</p>
+    </div>
+    <button id="settingsBtn" class="quiet icon" type="button" aria-label="Settings" title="Settings">⚙</button>
+  </header>
+
+  <section id="mainView">
+    <div class="card status" aria-live="polite">
+      <div class="row">
+        <span id="dot" class="dot"></span>
+        <strong id="statusText">Loading…</strong>
+      </div>
+      <p id="statusSub" class="muted small"></p>
+    </div>
+
+    <button id="openDm" class="primary wide" type="button">Open my messages</button>
+    <button id="onBtn" class="primary wide" type="button" hidden>Turn protection back on</button>
+
+    <div id="activeActions" class="split">
+      <button id="pauseBtn" class="quiet" type="button">Pause 10 min</button>
+      <button id="offBtn" class="quiet" type="button">Turn off</button>
+    </div>
+  </section>
+
+  <section id="cooldownView" hidden>
+    <div class="card cool">
+      <p class="breath">Take a slow breath.</p>
+      <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
+      <p id="cooldownText" class="muted small" aria-live="polite"></p>
+    </div>
+    <button id="cancelBtn" class="primary wide" type="button">Stay protected</button>
+    <button id="confirmBtn" class="quiet wide" type="button" hidden></button>
+  </section>
+
+  <section id="pinView" hidden>
+    <div class="card cool">
+      <p class="breath" id="pinTitle">Enter your PIN to turn off.</p>
+      <input id="pinInput" class="pin" type="password" inputmode="numeric" maxlength="8"
+             autocomplete="off" aria-label="PIN" placeholder="••••">
+      <p id="pinMsg" class="small" aria-live="polite">&nbsp;</p>
+    </div>
+    <button id="pinSubmit" class="primary wide" type="button">Unlock</button>
+    <button id="pinCancel" class="quiet wide" type="button">Keep protection on</button>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

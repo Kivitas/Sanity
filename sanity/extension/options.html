@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sanity settings</title>
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../assets/logo.png" alt="" width="56" height="56">
+      <div>
+        <h1 id="title">Sanity settings</h1>
+        <p class="muted">Instagram for humans, not algorithms. Made by kivitas.</p>
+      </div>
+    </header>
+
+    <section id="welcome" class="card pad" hidden>
+      <h2>You're set. 😊</h2>
+      <p>Sanity is on. Instagram in this browser is now messages only.</p>
+      <ol>
+        <li>Open Instagram. You land on your messages.</li>
+        <li>Anything else shows a calm black screen with a way back.</li>
+        <li>Pin Sanity to your toolbar: click the puzzle icon, then the pin.</li>
+      </ol>
+      <button id="openDm" class="primary" type="button">Open my messages</button>
+    </section>
+
+    <section class="card pad">
+      <h2>What you'll see</h2>
+      <div class="cols">
+        <div>
+          <h3>Stays visible</h3>
+          <ul>
+            <li>Direct messages and text</li>
+            <li>Photos and videos friends send from their camera or gallery</li>
+            <li>Story replies (the text)</li>
+            <li>Login pages</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Covered</h3>
+          <ul>
+            <li>Feed, Reels, Explore, Stories</li>
+            <li>Profiles, search, notifications</li>
+            <li>Reels, posts and stories shared in a chat</li>
+            <li>Anything Sanity doesn't recognise</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card pad">
+      <h2>Settings</h2>
+
+      <label class="toggle">
+        <input type="checkbox" id="startInMessages">
+        <span><strong>Start in messages</strong><br><span class="muted">Opening instagram.com takes you straight to your inbox.</span></span>
+      </label>
+
+      <label class="toggle">
+        <input type="checkbox" id="showStats">
+        <span><strong>Show today's count</strong><br><span class="muted">A small "scrolls skipped today" note. Counted on this device only.</span></span>
+      </label>
+
+      <label for="msg" class="field">Your message on the black screen</label>
+      <input id="msg" type="text" maxlength="80" placeholder="Your attention belongs to you.">
+      <p id="saved" class="muted small" aria-live="polite">&nbsp;</p>
+    </section>
+
+    <section class="card pad">
+      <h2>Turn-off PIN</h2>
+      <p class="muted small">Turning Sanity off asks for this PIN. The first try always says "wrong" and asks if you're sure, so it's a deliberate step. It's a commitment, not a lock: anyone with access to this browser can still remove the extension.</p>
+      <div id="pinNoPin">
+        <label class="field" for="newPin">Set a PIN (4 to 8 digits)</label>
+        <input id="newPin" class="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password">
+        <button id="setPin" class="primary" type="button">Set PIN</button>
+      </div>
+      <div id="pinHasPin" hidden>
+        <p><strong>A PIN is set.</strong></p>
+        <label class="field" for="curPin">Current PIN</label>
+        <input id="curPin" class="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off">
+        <label class="field" for="changePin">New PIN (to change it)</label>
+        <input id="changePin" class="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password">
+        <div class="btns">
+          <button id="changePinBtn" type="button">Change PIN</button>
+          <button id="removePinBtn" class="quiet" type="button">Remove PIN</button>
+        </div>
+      </div>
+      <p id="pinStatus" class="small" role="status" aria-live="polite">&nbsp;</p>
+    </section>
+
+    <section class="card pad">
+      <h2>Your count</h2>
+      <p><strong id="today">0</strong> today · <strong id="total">0</strong> all time</p>
+      <button id="reset" type="button">Reset count</button>
+    </section>
+
+    <section class="card pad">
+      <h2>Good to know</h2>
+      <ul>
+        <li><strong>Shortcut:</strong> Alt+Shift+M opens your messages. Change it at <code>chrome://extensions/shortcuts</code>.</li>
+        <li><strong>Turning off</strong> takes 30 seconds, then your PIN. Turning on is instant.</li>
+        <li><strong>Privacy:</strong> Sanity never reads, stores or sends your messages. Nothing leaves your browser.</li>
+        <li><strong>Limits:</strong> desktop Chrome only. Phone apps and system notifications aren't covered.</li>
+      </ul>
+    </section>
+
+    <footer class="muted small">Free forever. Open source. No tracking. Made by kivitas (<a href="https://github.com/kivitas">github.com/kivitas</a>). Not affiliated with Instagram or Meta.</footer>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

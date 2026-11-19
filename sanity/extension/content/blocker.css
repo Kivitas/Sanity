@@ -1,0 +1,76 @@
+/* Sanity — page-level and message-level styles.
+   The page is hidden by default (fail closed). content/instagram.js sets
+   data-sanity-state on <html> to "dm", "auth" or "off" to reveal it. */
+
+/* ---------- Page-level: hide everything unless explicitly allowed ---------- */
+html:not([data-sanity-state="dm"]):not([data-sanity-state="auth"]):not([data-sanity-state="off"]) {
+  background: #000 !important;
+}
+html:not([data-sanity-state="dm"]):not([data-sanity-state="auth"]):not([data-sanity-state="off"]) body {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ---------- DM mode: hide navigation to the rest of Instagram ---------- */
+html[data-sanity-state="dm"] a[href="/"],
+html[data-sanity-state="dm"] a[href^="/reels"],
+html[data-sanity-state="dm"] a[href^="/explore"],
+html[data-sanity-state="dm"] a[href^="/notifications"],
+html[data-sanity-state="dm"] a[href^="/accounts/activity"],
+html[data-sanity-state="dm"] a:has(> * svg[aria-label="Search"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Search"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Notifications"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="New post"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Home"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Reels"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Explore"]),
+html[data-sanity-state="dm"] a:has(svg[aria-label="Threads"]) {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ---------- Message-level: cover shared Reels, posts and stories ---------- */
+html[data-sanity-state="dm"] [data-sanity-covered] {
+  position: relative !important;
+  overflow: hidden !important;
+  min-width: 220px !important;
+  min-height: 150px !important;
+  background: #000 !important;
+  border-radius: 14px !important;
+  cursor: default !important;
+  text-decoration: none !important;
+}
+html[data-sanity-state="dm"] [data-sanity-covered] > * {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+html[data-sanity-state="dm"] [data-sanity-covered]::before {
+  content: "😊";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 56px);
+  z-index: 3;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1;
+  pointer-events: none;
+}
+html[data-sanity-state="dm"] [data-sanity-covered]::after {
+  content: "Protecting your sanity and dopamine baseline\A " attr(data-sanity-label);
+  white-space: pre-line;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 34px 14px 10px;
+  background: #000;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  color: #fff;
+  font: 600 13px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+}

@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Sanity",
+  "version": "0.3.0",
+  "author": "kivitas",
+  "description": "Messaging without doomscrolling. Turns Instagram on the web into a DM-only experience. Free, open source, no tracking.",
+  "minimum_chrome_version": "110",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/*"
+  ],
+  "icons": {
+    "16": "assets/logo-16.png",
+    "48": "assets/logo-48.png",
+    "128": "assets/logo.png"
+  },
+  "action": {
+    "default_title": "Sanity: messages only",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/logo-16.png",
+      "48": "assets/logo-48.png",
+      "128": "assets/logo.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "open-messages": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Open my Instagram messages"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "css": [
+        "content/blocker.css"
+      ],
+      "js": [
+        "content/instagram.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "homepage_url": "https://github.com/kivitas"
+}

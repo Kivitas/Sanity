@@ -38,3 +38,41 @@ chrome.storage.onChanged.addListener((changes, area) => {
 chrome.commands.onCommand.addListener((command) => {
   if (command === 'open-messages') chrome.tabs.create({ url: INBOX });
 });
+
+/* Explicit-image check: search engines serve thumbnails from a few image hosts.
+ * A content script cannot read those bytes across sites, so the service worker
+ * fetches them for the on-device check. Only these image hosts are allowed, and
+ * only Sanity's own content scripts may ask. Nothing is stored.
+ */
+const IMAGE_HOSTS = [/(^|\.)gstatic\.com$/, /(^|\.)bing\.net$/, /(^|\.)bing\.com$/, /(^|\.)duckduckgo\.com$/];
+const MAX_IMAGE_BYTES = 1.5 * 1024 * 1024;
+
+function toBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
+}
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (!msg || msg.type !== 'sanity-fetch-image') return false;
+  if (!sender || sender.id !== chrome.runtime.id) { sendResponse({ ok: false }); return false; }
+  let url;
+  try { url = new URL(msg.url); } catch (e) { sendResponse({ ok: false }); return false; }
+  if (url.protocol !== 'https:' || !IMAGE_HOSTS.some((re) => re.test(url.hostname))) {
+    sendResponse({ ok: false });
+    return false;
+  }
+  fetch(url.href, { credentials: 'omit', redirect: 'follow' })
+    .then(async (res) => {
+      const type = res.headers.get('content-type') || '';
+      if (!res.ok || !/^image\/(png|jpeg|gif|webp)$/.test(type)) throw new Error('not an image');
+      const buffer = await res.arrayBuffer();
+      if (buffer.byteLength > MAX_IMAGE_BYTES) throw new Error('too large');
+      sendResponse({ ok: true, dataUrl: `data:${type};base64,${toBase64(buffer)}` });
+    })
+    .catch(() => sendResponse({ ok: false }));
+  return true; // answer asynchronously
+});

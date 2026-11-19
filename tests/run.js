@@ -46,10 +46,18 @@ const ROUTES = [
 ];
 
 const FAKE_LANGUAGE_MODEL = `
+  // Stand-in for Chrome's on-device model. Text: YES when it mentions "explicit".
+  // Pictures: YES for the 7 px test picture only. Mirrors the real API shape.
   window.LanguageModel = {
     availability: async () => 'available',
     create: async () => ({
-      prompt: async (text) => (/explicit/i.test(text) ? 'YES' : 'NO'),
+      prompt: async (input) => {
+        if (Array.isArray(input)) {
+          const img = input[0].content.find((c) => c.type === 'image');
+          return img && img.value.width === 7 ? 'YES' : 'NO';
+        }
+        return /explicit/i.test(input) ? 'YES' : 'NO';
+      },
       destroy() {},
     }),
   };`;
@@ -208,10 +216,14 @@ async function main() {
     /* ------------------------------ Search engines ------------------------------ */
     {
       const p = await open('https://www.google.com/search?q=cute+cats', { fakeModel: true });
-      await p.waitForTimeout(500);
+      await p.waitForFunction(() => !!document.querySelector('#img-tile[data-sanity-covered]'), null, { timeout: 8000 }).catch(() => {});
+      await p.waitForTimeout(300);
       check('Search: ordinary query is allowed', (await state(p)) === 'allow', await state(p));
       check('Search: TikTok behind a Google redirect is covered', await coveredItself(p, '#redirected-tiktok'));
       check('Search: YouTube Short result is covered', await coveredItself(p, '#shorts-result'));
+      check('Search: result whose text means explicit content is covered (in context, no word list)', await coveredItself(p, '#text-explicit'));
+      check('Search: explicit picture (Images tab / thumbnail) is covered', await coveredItself(p, '#img-tile'));
+      check('Search: ordinary picture is NOT covered', !(await covered(p, '#img-safe')));
       check('Search: ordinary result is NOT covered', !(await covered(p, '#plain-result')));
       await p.close();
     }

@@ -37,7 +37,7 @@ Every covered item shows a calm card with a short, kind line. The lines rotate, 
 | **YouTube Music** | Music playing, the player controls, the song list | Every thumbnail and album picture. The music video picture (the sound keeps playing). |
 | **Spotify (web)** | Music playing, the player controls, the song list | Album, playlist and artist pictures, and looping video (Canvas) |
 | **WhatsApp (web)** | Chats and text | Reels, YouTube Shorts, TikToks and posts that arrive as links |
-| **Google, Bing, DuckDuckGo** | Ordinary results | Results that link to Reels, Shorts, TikToks, posts or stories. Explicit searches show the cover instead of results. |
+| **Google, Bing, DuckDuckGo** | Ordinary results | Results that link to Reels, Shorts, TikToks, posts or stories. Explicit searches, explicit results and explicit pictures show the cover. |
 
 Anything Sanity doesn't recognise is covered. A covered item can't be clicked, and there is no "reveal" button.
 
@@ -89,14 +89,21 @@ For a shorter guide, see [INSTALL.md](INSTALL.md).
 - **Today's count:** a small "scrolls skipped today" note, counted on your device only. You can hide or reset it.
 - **Light and dark:** the popup and settings follow your system theme.
 
-## Explicit searches
+## Explicit content in search
 
-Sanity doesn't keep a list of words. It asks an AI model that runs on your computer whether a search is asking for explicit adult material, and if so it shows the cover instead of results.
+On Google, Bing and DuckDuckGo, Sanity judges by meaning, not by a word list:
 
-- The model is Chrome's built-in on-device AI (sometimes called Gemini Nano). Chrome installs it when it's ready. Sanity never starts a download.
-- The search text never leaves your computer. Sanity doesn't store it.
-- If the built-in AI is not available, Sanity **cannot judge the search** and shows results as usual. It does not guess.
-- It judges the search, not each result. A result that is explicit but comes from a harmless-looking search may still show.
+- **The search**: an explicit search shows the cover instead of results.
+- **Results**: a result whose title or snippet means explicit material is covered.
+- **Pictures**: a thumbnail or Images-tab picture that shows nudity or sexual content is covered.
+
+The judging uses Chrome's built-in on-device AI. Nothing is sent to a server, and nothing is stored. Verdicts stay in memory for that tab.
+
+- Sanity only uses the AI when it is already installed. It never starts a download.
+- If the AI isn't installed, Sanity **can't judge**, so searches and results show as usual. Sanity doesn't guess.
+- Picture checks need the picture's bytes. Sanity reads pictures embedded in the page, and fetches thumbnails only from Google's, Bing's and DuckDuckGo's image hosts. Other pictures are left as they are.
+- The AI can be wrong. Expect some misses and some false alarms.
+- Only search pages are covered. Instagram, TikTok and YouTube Shorts are already fully covered elsewhere in this README.
 
 ## Turning it off
 
@@ -112,7 +119,7 @@ Turning off also needs your **PIN**. Set it under Settings. It's a commitment, n
 - Websites change their layout often. When a cover stops working, Sanity fails safe where it can, and it may need an update. Please report it (see below).
 - Covered items are found by their link, by their layout, and by some words such as "story". Those checks are less certain than link detection.
 - WhatsApp: a forwarded video file can't be recognised as a Reel, so it isn't covered. A Reel or Short sent as a link is covered.
-- Google Images and Videos: explicit searches are covered, but individual explicit pictures in other searches are not recognised.
+- Explicit content on other websites is not judged. Only search pages are.
 - Stories: Instagram stories are covered. WhatsApp status updates are not covered yet.
 
 ## Privacy
@@ -138,7 +145,6 @@ Turning off also needs your **PIN**. Set it under Settings. It's a commitment, n
 - [ ] Firefox and other Chromium browsers
 - [ ] WhatsApp status updates
 - [ ] Recognising forwarded Reel and Short video files in WhatsApp
-- [ ] Explicit-image checks in Google Images and Videos results
 - [ ] More search engines and country domains
 - [ ] Notice when a site changes and a cover stops working
 

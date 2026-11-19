@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Sanity",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "kivitas",
   "description": "Messaging without doomscrolling. Covers reels, shorts and feeds on major sites. Free, open source, no tracking.",
   "minimum_chrome_version": "111",
@@ -21,7 +21,10 @@
     "https://*.google.ca/*",
     "https://*.google.com.au/*",
     "https://*.bing.com/*",
-    "https://duckduckgo.com/*"
+    "https://duckduckgo.com/*",
+    "https://*.gstatic.com/*",
+    "https://*.bing.net/*",
+    "https://external-content.duckduckgo.com/*"
   ],
   "icons": {
     "16": "assets/logo-16.png",

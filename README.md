@@ -1,74 +1,77 @@
-# 😊 Sanity — Instagram for humans, not algorithms.
+# 😊 Sanity: messaging without doomscrolling
 
-A free, open-source Chrome extension that turns Instagram on the web into a messaging-only experience.
+A free, open-source Chrome extension. It keeps the people in your life one click away and hides the feeds that eat your time.
 
 *Keep the connection. Lose the addiction.*
 
 - Free forever
-- Open source
+- Open source (MIT)
 - No tracking or analytics
-- No collection of messages or personal data
+- No accounts, no servers, no network requests of its own
 - No subscriptions or ads
-- No algorithmic feeds
 - Messaging without doomscrolling
 
 > Sanity protects communication, not consumption.
 
-Sanity is an independent project. It is not affiliated with, endorsed by, or connected to Instagram or Meta.
+Sanity is an independent project. It is not affiliated with, endorsed by, or connected to Instagram, Meta, TikTok, Google, YouTube, Spotify, WhatsApp, Microsoft, or DuckDuckGo.
 
-## What it does
+## Screenshots
 
-| Instagram feature | With Sanity |
+These come from the extension running on mock pages in `tests/fixtures`. No real accounts, names or photos are used.
+
+| Chat: Reel and profile pictures covered, friends' photos visible | YouTube Shorts page |
 |---|---|
-| Direct messages, text, emoji | Visible |
-| Photos and videos a friend sends from their camera or gallery | Visible |
-| Story replies in DMs (the text) | Visible |
-| Shared Reels and posts in a chat | Covered |
-| Story thumbnails in a chat | Covered |
-| Home feed, Reels, Explore, Stories, profiles, search, notifications | Covered |
-| Login and two-factor pages | Never covered |
+| ![Chat with a covered Reel and smiley profile pictures](docs/screenshots/chat-covers.png) | ![YouTube Shorts page covered](docs/screenshots/shorts-blocked.png) |
 
-Anything Sanity doesn't recognise is covered. The black screen says:
+![YouTube home: Shorts covered, normal videos visible](docs/screenshots/youtube-home.png)
 
-> 😊 Protecting your sanity and dopamine baseline
+Every covered item shows a calm card with a short, kind line. The lines rotate, so there is always something worth reading.
 
-A covered Reel or post in a chat can't be clicked, and there is no "reveal" button.
+## What it covers
+
+| Where | Visible | Covered |
+|---|---|---|
+| **Instagram** | Direct messages, text, emoji, story replies (text), photos and videos friends send, one-time photos and videos, voice notes, login pages | Feed, Reels, Explore, Stories, profiles, search, notifications. Reels, posts and story thumbnails shared in a chat. Profile pictures (a smiley instead). |
+| **TikTok** | Messages, sign-in pages | Feed, videos, profiles, search. TikToks shared in chats and search results. |
+| **YouTube** | Everything except Shorts: home, videos, search, subscriptions, playlists, comments | `/shorts` pages, Shorts cards, Shorts shelves, the Shorts entry in the sidebar |
+| **YouTube Music** | Music playing, the player controls, the song list | Every thumbnail and album picture. The music video picture (the sound keeps playing). |
+| **Spotify (web)** | Music playing, the player controls, the song list | Album, playlist and artist pictures, and looping video (Canvas) |
+| **WhatsApp (web)** | Chats and text | Reels, YouTube Shorts, TikToks and posts that arrive as links |
+| **Google, Bing, DuckDuckGo** | Ordinary results | Results that link to Reels, Shorts, TikToks, posts or stories. Explicit searches show the cover instead of results. |
+
+Anything Sanity doesn't recognise is covered. A covered item can't be clicked, and there is no "reveal" button.
+
+Sanity is built to leave alone audio, and the photos and videos people send you. It covers those only when they are a shared Reel, Short, TikTok or post.
 
 ## Install (step by step)
 
 You don't need to be a developer. You only need Chrome on a computer.
 
-### Option A: Install from GitHub (recommended)
-
-1. Click the green **Code** button at the top of this page and choose **Download ZIP** (or clone the repo with `git clone https://github.com/Kivitas/sanity.git`).
-2. Unzip the downloaded file and open the extracted folder. Inside, you'll see a folder called `extension` (with `manifest.json` inside it).
+1. Click the green **Code** button at the top of this page and choose **Download ZIP** (or clone with `git clone https://github.com/Kivitas/sanity.git`).
+2. Unzip the file. You get a folder with `manifest.json` at its top level. That folder is the extension.
 3. In Chrome, type `chrome://extensions` in the address bar and press Enter.
 4. Turn on **Developer mode** (switch in the top right).
 5. Click **Load unpacked**.
-6. Select the **`extension`** folder (the one with `manifest.json` inside), then click **Select Folder**.
+6. Select the folder that contains **`manifest.json`** (the top folder you unzipped or cloned). Click **Select Folder**.
 7. Pin Sanity: click the puzzle icon in Chrome's toolbar, then the pin next to Sanity.
 8. Open <https://www.instagram.com/direct/inbox/>.
 
-> **Which folder?** Always choose `extension`, the folder that contains `manifest.json`. Not the outer repo folder, and not the zip file.
+> **Which folder?** The one with `manifest.json` directly inside it. Not a folder inside it, and not the zip file.
 
-For a shorter quick-start guide, see [INSTALL.md](INSTALL.md).
+For a shorter guide, see [INSTALL.md](INSTALL.md).
 
-### Option B: Pack into a `.crx` file (optional)
+### Packed `.crx` file (optional)
 
-Packing makes a single `.crx` file. Chrome blocks `.crx` files from installing outside the Chrome Web Store, so use Option A to actually run Sanity. A packed file is useful for sharing or archiving.
+`sanity.crx` in this repo is an older packed build (0.3.0). Chrome blocks `.crx` files from installing outside the Chrome Web Store, so use **Load unpacked** to run Sanity. To pack a new one:
 
-1. Go to `chrome://extensions` and turn on **Developer mode**.
-2. Click **Pack extension**.
-3. **Extension root directory:** choose the `extension` folder (the one with `manifest.json`).
-4. **Private key file:** leave this empty the first time.
-5. Click **Pack extension**. Chrome creates a `.crx` file and a `.pem` file in the folder above `extension`.
-6. Keep the `.pem` file private. You need it to sign later updates. Don't upload it to GitHub.
-
-**Error "Manifest file is missing or unreadable"?** You picked the wrong folder. Choose `extension` (the one with `manifest.json` inside), not the outer `sanity` folder or the zip.
+1. Go to `chrome://extensions`, turn on **Developer mode**, and click **Pack extension**.
+2. **Extension root directory:** the folder with `manifest.json`.
+3. **Private key file:** leave it empty the first time.
+4. Chrome creates a `.crx` and a `.pem` file in the folder above. Keep the `.pem` private. You need it to sign later updates. It is ignored by git. Never upload it.
 
 ### Update to a new version
 
-1. Replace the files in `extension`.
+1. Replace the files in your Sanity folder (or `git pull`).
 2. Go to `chrome://extensions` and click the reload icon on Sanity.
 
 ### Uninstall
@@ -79,61 +82,87 @@ Packing makes a single `.crx` file. Chrome blocks `.crx` files from installing o
 
 - **Start in messages:** opening instagram.com takes you straight to your inbox.
 - **Toolbar badge:** blank when on, `II` when paused, `OFF` when off.
-- **Shortcut:** Alt+Shift+M opens your messages (change it at `chrome://extensions/shortcuts`).
-- **Turn-off PIN:** turning off needs your PIN, and the first try always fails. Set it in Settings.
-- **Welcome and settings page:** your own message for the black screen, and toggles for the options above.
+- **Shortcut:** Alt+Shift+M opens your Instagram messages (change it at `chrome://extensions/shortcuts`).
+- **Turn-off PIN:** turning off needs your PIN. Set it in Settings.
+- **Motivational lines:** every cover shows a short, kind line, and the lines change.
+- **Settings page:** your own message for the black screen, and toggles for the options above.
 - **Today's count:** a small "scrolls skipped today" note, counted on your device only. You can hide or reset it.
 - **Light and dark:** the popup and settings follow your system theme.
+
+## Explicit searches
+
+Sanity doesn't keep a list of words. It asks an AI model that runs on your computer whether a search is asking for explicit adult material, and if so it shows the cover instead of results.
+
+- The model is Chrome's built-in on-device AI (sometimes called Gemini Nano). Chrome installs it when it's ready. Sanity never starts a download.
+- The search text never leaves your computer. Sanity doesn't store it.
+- If the built-in AI is not available, Sanity **cannot judge the search** and shows results as usual. It does not guess.
+- It judges the search, not each result. A result that is explicit but comes from a harmless-looking search may still show.
 
 ## Turning it off
 
 Turning Sanity on is instant. Pausing for 10 minutes or turning off takes a 30-second wait first.
 
-Turning off also needs your **PIN**. Set it under Settings. The first try always says "Wrong PIN" and asks if you're sure. The second correct try turns Sanity off. It's a commitment, not a lock: anyone with access to this browser can still remove the extension.
+Turning off also needs your **PIN**. Set it under Settings. It's a commitment, not a lock: anyone with access to this browser can still remove the extension.
 
 ## What it can't do
 
-- It only works in Chrome on a computer. It does nothing in the Instagram phone apps.
+- It only works in Chrome on a computer. It does nothing in phone apps, and it doesn't work in other browsers yet. See the roadmap.
 - It doesn't block notifications from your browser or operating system.
 - You can always disable it from `chrome://extensions`. It's a commitment tool, not a lock.
-- Instagram changes its website often, so parts of Sanity will break from time to time. When it can't recognise the messages page, it stays covered and asks you to report it.
-- Cards without a recognisable link, and story thumbnails, are detected by layout and by the English word "story". These checks are less reliable than link detection.
+- Websites change their layout often. When a cover stops working, Sanity fails safe where it can, and it may need an update. Please report it (see below).
+- Covered items are found by their link, by their layout, and by some words such as "story". Those checks are less certain than link detection.
+- WhatsApp: a forwarded video file can't be recognised as a Reel, so it isn't covered. A Reel or Short sent as a link is covered.
+- Google Images and Videos: explicit searches are covered, but individual explicit pictures in other searches are not recognised.
+- Stories: Instagram stories are covered. WhatsApp status updates are not covered yet.
 
 ## Privacy
 
-- Sanity never reads, stores or sends your messages.
-- It looks only at link targets, element types and element sizes, to decide what to cover.
-- The only thing saved is your settings (on/off, pause time, your custom message, your count), using Chrome's own extension storage.
-- Permissions: `storage`, `alarms` (to end a pause on time), and access to `instagram.com` only. No remote code, no servers.
+- Sanity never reads, stores or sends your messages, your searches, or your browsing history.
+- It looks at link addresses, element types and element sizes on the pages you open, so it can decide what to cover. Nothing is sent anywhere.
+- The only things saved are your settings (on/off, pause time, your message, your count, your PIN as a hash), in Chrome's own extension storage.
+- Permissions: `storage` and `alarms` (to end a pause on time), plus access to the sites listed above. No remote code, no servers, no analytics.
 
 ## How it works
 
-- `content/blocker.css` hides the page by default, so protection starts before any script runs.
-- `content/instagram.js` has two independent systems:
-  - **Page level:** allows a page only if the URL is under `/direct/` *and* the messaging interface is found. Everything else gets the shield.
-  - **Message level:** inside a chat, covers attachments that link to a Reel, post or story.
-- `popup/` is the toolbar window: status, open messages, pause, turn off.
-- `pages/` is the welcome and settings page.
-- `background.js` updates the toolbar badge, ends a pause on time, and handles the shortcut. It never touches page content.
+- `manifest.json` lists the sites and the scripts.
+- `content/blocker.css` holds the covers and hides pages until Sanity has decided (on Instagram and TikTok).
+- `content/quotes.js` has the motivational lines.
+- `content/core.js` is the shared engine: the cover screen, the covers, the link rules that spot Reels, Shorts, TikToks, posts and stories, and the page checks.
+- `content/sites/*.js` has one small file per site. Each one says what is allowed, what is covered, and how.
+- `content/ai-bridge.js` runs in the page so it can reach Chrome's built-in AI. It is the only file that does.
+- `popup/` is the toolbar window. `pages/` is the settings page. `background.js` updates the badge, ends a pause on time, and handles the shortcut.
+
+## Roadmap
+
+- [ ] **Android and iOS versions** (coming)
+- [ ] Firefox and other Chromium browsers
+- [ ] WhatsApp status updates
+- [ ] Recognising forwarded Reel and Short video files in WhatsApp
+- [ ] Explicit-image checks in Google Images and Videos results
+- [ ] More search engines and country domains
+- [ ] Notice when a site changes and a cover stops working
 
 ## Tests
 
-`tests/run.js` loads the extension in Chromium and runs it against `tests/mock.html`, a stand-in page served in place of instagram.com. It needs Node.js and Playwright.
+The tests load the extension in Chromium and run it against mock pages in `tests/fixtures`. The mock pages are **not** the real sites.
 
 ```bash
-node tests/run.js
+npm install
+npm test
 ```
 
-The mock page is not Instagram. Passing tests show the logic works, not that the selectors match the live site.
+Passing tests show the logic works. They do not prove that the selectors still match the live site. Checking the live site by hand is still needed. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+To regenerate the screenshots above: `npm run screenshots`.
 
 ## Contributing
 
-Bug reports and fixes for Instagram layout changes are the most useful contributions. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Bug reports and fixes for layout changes are the most useful contributions. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Links
 
 - Repository: https://github.com/Kivitas/sanity
-- Author: https://github.com/Kivitas
+- Author: https://github.com/kivitas
 
 ## License
 

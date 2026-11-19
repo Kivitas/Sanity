@@ -34,18 +34,25 @@
         <div>
           <h3>Stays visible</h3>
           <ul>
-            <li>Direct messages and text</li>
-            <li>Photos and videos friends send from their camera or gallery</li>
-            <li>Story replies (the text)</li>
-            <li>Login pages</li>
+            <li>Direct messages and text, and story replies (the text)</li>
+            <li>Photos and videos friends send, including one-time ones</li>
+            <li>Voice notes and audio</li>
+            <li>Login and two-factor pages</li>
+            <li>YouTube, except Shorts</li>
+            <li>Your music and the controls (Spotify, YouTube Music)</li>
           </ul>
         </div>
         <div>
           <h3>Covered</h3>
           <ul>
-            <li>Feed, Reels, Explore, Stories</li>
-            <li>Profiles, search, notifications</li>
+            <li>Instagram feed, Reels, Explore, Stories, profiles</li>
             <li>Reels, posts and stories shared in a chat</li>
+            <li>Profile pictures (a smiley instead)</li>
+            <li>TikTok, except messages</li>
+            <li>YouTube Shorts, wherever they appear</li>
+            <li>Music videos (the sound keeps playing) and all album pictures</li>
+            <li>Reels, Shorts and TikToks shared in WhatsApp, and in search results</li>
+            <li>Explicit searches on Google, Bing and DuckDuckGo</li>
             <li>Anything Sanity doesn't recognise</li>
           </ul>
         </div>
@@ -72,7 +79,7 @@
 
     <section class="card pad">
       <h2>Turn-off PIN</h2>
-      <p class="muted small">Turning Sanity off asks for this PIN. The first try always says "wrong" and asks if you're sure, so it's a deliberate step. It's a commitment, not a lock: anyone with access to this browser can still remove the extension.</p>
+      <p class="muted small">Turning Sanity off asks for this PIN. It's a commitment, not a lock: anyone with access to this browser can still remove the extension.</p>
       <div id="pinNoPin">
         <label class="field" for="newPin">Set a PIN (4 to 8 digits)</label>
         <input id="newPin" class="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password">
@@ -103,8 +110,9 @@
       <ul>
         <li><strong>Shortcut:</strong> Alt+Shift+M opens your messages. Change it at <code>chrome://extensions/shortcuts</code>.</li>
         <li><strong>Turning off</strong> takes 30 seconds, then your PIN. Turning on is instant.</li>
-        <li><strong>Privacy:</strong> Sanity never reads, stores or sends your messages. Nothing leaves your browser.</li>
-        <li><strong>Limits:</strong> desktop Chrome only. Phone apps and system notifications aren't covered.</li>
+        <li><strong>Explicit searches</strong> use Chrome's built-in on-device AI, when it's installed. The search text never leaves your computer. If the AI isn't installed, Sanity can't judge a search and shows results as usual.</li>
+        <li><strong>Privacy:</strong> Sanity never reads, stores or sends your messages or searches. Nothing leaves your browser.</li>
+        <li><strong>Limits:</strong> desktop Chrome only. Phone apps and system notifications aren't covered. Sites change their layout often, so some covers may need an update.</li>
       </ul>
     </section>
 

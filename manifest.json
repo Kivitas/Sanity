@@ -1,0 +1,106 @@
+{
+  "manifest_version": 3,
+  "name": "Sanity",
+  "version": "0.4.0",
+  "author": "kivitas",
+  "description": "Messaging without doomscrolling. Covers reels, shorts and feeds on major sites. Free, open source, no tracking.",
+  "minimum_chrome_version": "111",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.instagram.com/*",
+    "https://*.tiktok.com/*",
+    "https://*.youtube.com/*",
+    "https://open.spotify.com/*",
+    "https://web.whatsapp.com/*",
+    "https://*.google.com/*",
+    "https://*.google.co.in/*",
+    "https://*.google.co.uk/*",
+    "https://*.google.ca/*",
+    "https://*.google.com.au/*",
+    "https://*.bing.com/*",
+    "https://duckduckgo.com/*"
+  ],
+  "icons": {
+    "16": "assets/logo-16.png",
+    "48": "assets/logo-48.png",
+    "128": "assets/logo.png"
+  },
+  "action": {
+    "default_title": "Sanity",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/logo-16.png",
+      "48": "assets/logo-48.png",
+      "128": "assets/logo.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "open-messages": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Open my Instagram messages"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.instagram.com/*",
+        "https://*.tiktok.com/*",
+        "https://*.youtube.com/*",
+        "https://open.spotify.com/*",
+        "https://web.whatsapp.com/*",
+        "https://*.google.com/*",
+        "https://*.google.co.in/*",
+        "https://*.google.co.uk/*",
+        "https://*.google.ca/*",
+        "https://*.google.com.au/*",
+        "https://*.bing.com/*",
+        "https://duckduckgo.com/*"
+      ],
+      "css": [
+        "content/blocker.css"
+      ],
+      "js": [
+        "content/quotes.js",
+        "content/core.js",
+        "content/sites/instagram.js",
+        "content/sites/tiktok.js",
+        "content/sites/youtube.js",
+        "content/sites/youtube-music.js",
+        "content/sites/spotify.js",
+        "content/sites/whatsapp.js",
+        "content/sites/search.js",
+        "content/start.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.google.com/*",
+        "https://*.google.co.in/*",
+        "https://*.google.co.uk/*",
+        "https://*.google.ca/*",
+        "https://*.google.com.au/*",
+        "https://*.bing.com/*",
+        "https://duckduckgo.com/*"
+      ],
+      "js": [
+        "content/ai-bridge.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    }
+  ],
+  "homepage_url": "https://github.com/kivitas"
+}

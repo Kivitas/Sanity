@@ -22,3 +22,6 @@ h1 { font-size: 16px; line-height: 1.2; }
 .pin:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 #pinMsg { min-height: 1.4em; }
 #pinMsg.bad { color: var(--warn); }
+
+.foot { margin-top: 12px; text-align: center; }
+.foot a { color: var(--muted); }

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>YouTube (mock page)</title>
+<style>body{margin:0;font:14px sans-serif} .grid{display:flex;gap:12px;flex-wrap:wrap;padding:12px} .tile{width:200px;height:150px;background:#345}</style>
+</head><body>
+<ytd-guide-entry-renderer id="guide-shorts"><a href="/shorts">Shorts</a></ytd-guide-entry-renderer>
+<div class="grid">
+  <ytd-rich-item-renderer id="short-card"><a id="thumbnail" href="/shorts/abc123"><div class="tile"></div></a><span>A short</span></ytd-rich-item-renderer>
+  <ytd-rich-item-renderer id="video-card"><a id="thumbnail" href="/watch?v=longvideo"><div class="tile"></div></a><span>A long video</span></ytd-rich-item-renderer>
+</div>
+<ytd-reel-shelf-renderer id="shorts-shelf"><div class="tile"></div></ytd-reel-shelf-renderer>
+</body></html>

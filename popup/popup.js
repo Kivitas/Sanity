@@ -1,8 +1,7 @@
 /* Sanity popup.
    Turn on: instant.
    Pause 10 min: 30-second cooldown, then confirm.
-   Turn off: 30-second cooldown, then your PIN. The first PIN attempt always
-   fails and asks "Are you sure?", so turning off is a deliberate step.
+   Turn off: 30-second cooldown, then your PIN.
    A PIN is a commitment device, not security: anyone with access to this
    browser profile can still remove the extension. */
 'use strict';
@@ -35,8 +34,8 @@ function render() {
   const today = stats.day === todayKey() ? stats.today : 0;
   if (isActive()) {
     dot.classList.add('on');
-    $('statusText').textContent = 'Active: messages only';
-    $('statusSub').textContent = !settings.showStats ? '' :
+    $('statusText').textContent = 'Active';
+    $('statusSub').textContent = !settings.showStats ? 'Covering reels, shorts and feeds.' :
       today === 0 ? 'Nothing to skip yet today.' : `${today} scroll${today === 1 ? '' : 's'} skipped today.`;
   } else if (isPaused()) {
     dot.classList.add('paused');
@@ -131,14 +130,6 @@ function pinMessage(text, bad) {
 async function submitPin() {
   const entered = $('pinInput').value.trim();
   if (!entered) return;
-  if (pinState.pinTries === 0) {
-    // First attempt always fails, so turning off is never a reflex.
-    pinState.pinTries = 1;
-    chrome.storage.local.set({ pinTries: 1 });
-    $('pinInput').value = '';
-    pinMessage('Wrong PIN. Are you sure you want to turn off?', true);
-    return;
-  }
   if ((await sha256(entered)) === pinState.pinHash) {
     cooldown = null;
     chrome.storage.local.remove(['cooldown', 'pinTries']);

@@ -1,0 +1,16 @@
+{
+  "name": "sanity",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Sanity: messaging without doomscrolling. Chrome extension.",
+  "author": "kivitas",
+  "license": "MIT",
+  "homepage": "https://github.com/kivitas",
+  "scripts": {
+    "test": "node tests/run.js",
+    "screenshots": "node tests/screenshots.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

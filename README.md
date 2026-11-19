@@ -38,10 +38,10 @@ A covered Reel or post in a chat can't be clicked, and there is no "reveal" butt
 
 You don't need to be a developer. You only need Chrome on a computer.
 
-### Option A: Install from the zip (recommended)
+### Option A: Install from GitHub (recommended)
 
-1. Unzip `sanity.zip`. You get a folder called `sanity`.
-2. Open the `sanity` folder, then open the folder called `extension`. You should see `manifest.json` in it.
+1. Click the green **Code** button at the top of this page and choose **Download ZIP** (or clone the repo with `git clone https://github.com/Kivitas/sanity.git`).
+2. Unzip the downloaded file and open the extracted folder. Inside, you'll see a folder called `extension` (with `manifest.json` inside it).
 3. In Chrome, type `chrome://extensions` in the address bar and press Enter.
 4. Turn on **Developer mode** (switch in the top right).
 5. Click **Load unpacked**.
@@ -49,7 +49,9 @@ You don't need to be a developer. You only need Chrome on a computer.
 7. Pin Sanity: click the puzzle icon in Chrome's toolbar, then the pin next to Sanity.
 8. Open <https://www.instagram.com/direct/inbox/>.
 
-> **Which folder?** Always choose `extension`, the folder that contains `manifest.json`. Not `sanity`, and not the zip file.
+> **Which folder?** Always choose `extension`, the folder that contains `manifest.json`. Not the outer repo folder, and not the zip file.
+
+For a shorter quick-start guide, see [INSTALL.md](INSTALL.md).
 
 ### Option B: Pack into a `.crx` file (optional)
 
@@ -130,7 +132,8 @@ Bug reports and fixes for Instagram layout changes are the most useful contribut
 
 ## Links
 
-- GitHub: https://github.com/kivitas
+- Repository: https://github.com/Kivitas/sanity
+- Author: https://github.com/Kivitas
 
 ## License
 

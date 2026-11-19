@@ -1,0 +1,7 @@
+# Private signing keys (never commit these)
+*.pem
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini

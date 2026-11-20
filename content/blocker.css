@@ -17,13 +17,11 @@ html[data-sanity-site="tiktok"]:not([data-sanity-state]) body {
 }
 
 /* ---------- Instagram: hide navigation to the rest of Instagram in chat ---------- */
+/* Notifications stay open (the link is not hidden). */
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a[href="/"],
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a[href^="/reels"],
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a[href^="/explore"],
-html[data-sanity-site="instagram"][data-sanity-state="allow"] a[href^="/notifications"],
-html[data-sanity-site="instagram"][data-sanity-state="allow"] a[href^="/accounts/activity"],
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a:has(svg[aria-label="Search"]),
-html[data-sanity-site="instagram"][data-sanity-state="allow"] a:has(svg[aria-label="Notifications"]),
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a:has(svg[aria-label="New post"]),
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a:has(svg[aria-label="Home"]),
 html[data-sanity-site="instagram"][data-sanity-state="allow"] a:has(svg[aria-label="Reels"]),

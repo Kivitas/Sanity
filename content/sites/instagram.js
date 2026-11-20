@@ -1,7 +1,8 @@
 /* Sanity adapter: instagram.com
  *
  * Page level: only the messages route, and only once the messaging interface
- * is found, is allowed. Everything else gets the cover.
+ * is found, is allowed. Notifications and follow requests are shown as they
+ * are. Everything else gets the cover.
  * Message level, inside a chat:
  *   - shared Reels, posts and stories are covered (by link, by the card's
  *     username overlay, or by a story word beside a thumbnail);
@@ -15,6 +16,8 @@
   const IG = /(^|\.)instagram\.com$/;
   const RULES = {
     authPrefixes: ['/accounts/', '/challenge/', '/auth_platform/', '/oauth/'],
+    // Notifications and follow requests: shown as they are, like sign-in pages.
+    activityPrefixes: ['/accounts/activity', '/notifications'],
     dmPrefix: '/direct/',
     strongSignals: [
       '[contenteditable="true"][role="textbox"]',
@@ -34,6 +37,7 @@
   const DM_BUTTON = { label: 'Go to messages', action: () => location.assign('/direct/inbox/') };
 
   function routeKind(path) {
+    if (RULES.activityPrefixes.some((p) => path.startsWith(p))) return 'activity';
     if (RULES.authPrefixes.some((p) => path.startsWith(p))) return 'auth';
     if (path.startsWith(RULES.dmPrefix)) return 'dm';
     return 'blocked';
@@ -53,7 +57,7 @@
 
   function decide(loc) {
     const kind = routeKind(loc.pathname);
-    if (kind === 'auth') { dmConfirmed = false; return { state: 'auth' }; }
+    if (kind === 'auth' || kind === 'activity') { dmConfirmed = false; return { state: 'auth' }; }
     if (kind === 'dm') {
       if (!dmConfirmed && interfaceConfirmed()) dmConfirmed = true;
       if (dmConfirmed) return { state: 'allow' };

@@ -36,6 +36,8 @@ try {
 const ROUTES = [
   [/^https:\/\/www\.instagram\.com\/direct\//, 'instagram-dm.html'],
   [/^https:\/\/www\.instagram\.com\/reels\//, 'instagram-dm.html'],
+  [/^https:\/\/www\.instagram\.com\/accounts\/activity\//, 'instagram-dm.html'],
+  [/^https:\/\/www\.instagram\.com\/notifications\//, 'instagram-dm.html'],
   [/^https:\/\/www\.youtube\.com\/(?!shorts)/, 'youtube-home.html'],
   [/^https:\/\/www\.youtube\.com\/shorts/, 'youtube-shorts.html'],
   [/^https:\/\/music\.youtube\.com\//, 'youtube-music.html'],
@@ -136,6 +138,12 @@ async function main() {
       check('IG: avatar CSS replaces the picture with a smiley',
         (await imgContent(p, '#pfp-note')).includes('svg'));
       check('IG: messages page is not blocked', !(await shieldShown(p)));
+      check('IG: Notifications link is visible in chat',
+        (await p.evaluate(() => getComputedStyle(document.getElementById('nav-notifications')).visibility)) === 'visible');
+      check('IG: Home link is still hidden in chat',
+        (await p.evaluate(() => getComputedStyle(document.querySelector('nav a[href="/"]')).visibility)) === 'hidden');
+      check('IG: Explore link is still hidden in chat',
+        (await p.evaluate(() => getComputedStyle(document.querySelector('nav a[href^="/explore"]')).visibility)) === 'hidden');
       await p.close();
     }
     {
@@ -143,6 +151,13 @@ async function main() {
       await p.waitForTimeout(200);
       check('IG: Reels feed is blocked', (await state(p)) === 'block', await state(p));
       check('IG: block screen is shown on the Reels feed', await shieldShown(p));
+      await p.close();
+    }
+    for (const url of ['https://www.instagram.com/accounts/activity/', 'https://www.instagram.com/notifications/']) {
+      const p = await open(url);
+      await p.waitForTimeout(200);
+      check(`IG: notifications page ${new URL(url).pathname} is not blocked`, !(await shieldShown(p)) && (await state(p)) !== 'block', await state(p));
+      check(`IG: notifications page ${new URL(url).pathname} is not covered`, !(await covered(p, '#reel-wrap')));
       await p.close();
     }
 

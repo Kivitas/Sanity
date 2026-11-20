@@ -31,7 +31,7 @@ Every covered item shows a calm card with a short, kind line. The lines rotate, 
 
 | Where | Visible | Covered |
 |---|---|---|
-| **Instagram** | Direct messages, text, emoji, story replies (text), photos and videos friends send, one-time photos and videos, voice notes, login pages | Feed, Reels, Explore, Stories, profiles, search, notifications. Reels, posts and story thumbnails shared in a chat. Profile pictures (a smiley instead). |
+| **Instagram** | Direct messages, text, emoji, story replies (text), photos and videos friends send, one-time photos and videos, voice notes, login pages, notifications and follow requests | Feed, Reels, Explore, Stories, profiles, search. Reels, posts and story thumbnails shared in a chat. Profile pictures (a smiley instead). |
 | **TikTok** | Messages, sign-in pages | Feed, videos, profiles, search. TikToks shared in chats and search results. |
 | **YouTube** | Everything except Shorts: home, videos, search, subscriptions, playlists, comments | `/shorts` pages, Shorts cards, Shorts shelves, the Shorts entry in the sidebar |
 | **YouTube Music** | Music playing, the player controls, the song list | Every thumbnail and album picture. The music video picture (the sound keeps playing). |

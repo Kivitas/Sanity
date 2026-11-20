@@ -225,6 +225,9 @@ async function main() {
       await p.waitForTimeout(300);
       check('WhatsApp: YouTube Short link in a chat is covered', await coveredItself(p, '#short-row'));
       check('WhatsApp: ordinary link is NOT covered', !(await covered(p, '#text-row')));
+      check('WhatsApp: profile picture gets smiley', await avatar(p, '#pfp'));
+      check('WhatsApp: profile picture CSS shows the smiley', (await imgContent(p, '#pfp')).includes('svg'));
+      check('WhatsApp: emoji is NOT replaced with a smiley', !(await avatar(p, '#emoji')));
       await p.close();
     }
 
@@ -240,6 +243,17 @@ async function main() {
       check('Search: explicit picture (Images tab / thumbnail) is covered', await coveredItself(p, '#img-tile'));
       check('Search: ordinary picture is NOT covered', !(await covered(p, '#img-safe')));
       check('Search: ordinary result is NOT covered', !(await covered(p, '#plain-result')));
+      check('Search: picture from an unchecked host is NOT covered on normal results', !(await covered(p, '#foreign-img')));
+      check('Search: nothing is left hidden while checking (all checks settled)',
+        (await p.evaluate(() => document.querySelectorAll('[data-sanity-checking]').length)) === 0);
+      await p.close();
+    }
+    {
+      const p = await open('https://www.google.com/search?q=cute+cats&tbm=isch', { fakeModel: true });
+      await p.waitForFunction(() => !!document.querySelector('#foreign-img')?.closest('[data-sanity-covered]'), null, { timeout: 8000 }).catch(() => {});
+      check('Search Images: picture that cannot be checked is covered (fail closed)', await covered(p, '#foreign-img'));
+      check('Search Images: ordinary picture is NOT covered', !(await covered(p, '#img-safe')));
+      check('Search Images: explicit picture is covered', await covered(p, '#img-tile'));
       await p.close();
     }
     {

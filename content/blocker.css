@@ -56,6 +56,11 @@ html[data-sanity-site="spotify"][data-sanity-state="allow"] [style*="url("] {
   background-color: #000 !important;
 }
 
+/* ---------- Search: results and pictures stay hidden until they are checked ---------- */
+html[data-sanity-state="allow"] [data-sanity-checking] {
+  opacity: 0 !important;
+}
+
 /* ---------- Covered items: the calm card ---------- */
 html[data-sanity-state="allow"] [data-sanity-covered] {
   position: relative !important;

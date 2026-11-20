@@ -36,8 +36,8 @@ Every covered item shows a calm card with a short, kind line. The lines rotate, 
 | **YouTube** | Everything except Shorts: home, videos, search, subscriptions, playlists, comments | `/shorts` pages, Shorts cards, Shorts shelves, the Shorts entry in the sidebar |
 | **YouTube Music** | Music playing, the player controls, the song list | Every thumbnail and album picture. The music video picture (the sound keeps playing). |
 | **Spotify (web)** | Music playing, the player controls, the song list | Album, playlist and artist pictures, and looping video (Canvas) |
-| **WhatsApp (web)** | Chats and text | Reels, YouTube Shorts, TikToks and posts that arrive as links |
-| **Google, Bing, DuckDuckGo** | Ordinary results | Results that link to Reels, Shorts, TikToks, posts or stories. Explicit searches, explicit results and explicit pictures show the cover. |
+| **WhatsApp (web)** | Chats and text | Reels, YouTube Shorts, TikToks and posts that arrive as links. Profile pictures (a smiley instead). |
+| **Google, Bing, DuckDuckGo** | Ordinary results | Results that link to Reels, Shorts, TikToks, posts or stories. Explicit searches, explicit results and explicit pictures show the cover. Results and pictures stay hidden until they are checked. On Images pages, a picture that can't be checked is covered too. |
 
 Anything Sanity doesn't recognise is covered. A covered item can't be clicked, and there is no "reveal" button.
 

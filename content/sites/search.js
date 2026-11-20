@@ -37,6 +37,15 @@
     return (new URL(loc.href).searchParams.get('q') || '').trim();
   }
 
+  // The Images tab of each engine. Almost everything there is a picture.
+  function imagesView(loc) {
+    const params = new URL(loc.href).searchParams;
+    if (/(^|\.)google\./.test(loc.hostname)) return params.get('tbm') === 'isch';
+    if (/(^|\.)bing\.com$/.test(loc.hostname)) return loc.pathname.startsWith('/images');
+    if (/(^|\.)duckduckgo\.com$/.test(loc.hostname)) return params.get('iax') === 'images' || params.get('ia') === 'images';
+    return false;
+  }
+
   /* ------------------------------ Verdicts (memory only) ------------------------------ */
 
   const verdicts = new Map(); // key -> { v, at }
@@ -49,7 +58,8 @@
   function fresh(key) {
     const hit = verdicts.get(key);
     if (!hit) return undefined;
-    const ttl = hit.v === 'unavailable' ? UNAVAILABLE_TTL : hit.v === 'unreadable' ? UNREADABLE_TTL : Infinity;
+    const retry = hit.v === 'unavailable' || hit.v === 'timeout';
+    const ttl = retry ? UNAVAILABLE_TTL : hit.v === 'unreadable' ? UNREADABLE_TTL : Infinity;
     if (Date.now() - hit.at > ttl) { verdicts.delete(key); return undefined; }
     return hit.v;
   }
@@ -68,10 +78,11 @@
     req.resolve(e.data.result === 'yes' || e.data.result === 'no' ? e.data.result : 'unavailable');
   });
 
+  // 'timeout' means the model was installed but did not answer in time.
   function askBridge(payload) {
     return new Promise((resolve) => {
       const id = ++seq;
-      const timer = setTimeout(() => { replies.delete(id); resolve('unavailable'); }, TIMEOUT_MS);
+      const timer = setTimeout(() => { replies.delete(id); resolve('timeout'); }, TIMEOUT_MS);
       replies.set(id, { resolve, timer });
       window.postMessage({ __sanity: 'ask', id, ...payload }, '*');
     });
@@ -144,6 +155,17 @@
   const checkedBox = new WeakMap(); // result -> text key
   const checkedImg = new WeakMap(); // picture -> src
 
+  // Fail closed while a check is running: a result or picture stays hidden
+  // until the on-device check answers (see [data-sanity-checking] in blocker.css).
+  const CHECKING = 'data-sanity-checking';
+
+  // A verdict that should cover: a YES, a model that timed out, or (on the
+  // Images tab only) a picture that could not be read at all.
+  const shouldCover = (v, { pictures }) =>
+    v === 'yes' || v === 'timeout' || (pictures && v === 'unreadable' && imagesPage);
+
+  let imagesPage = false; // set on each scan from the current address
+
   function checkResult(box) {
     if (box.hasAttribute(S.attrs.COVER_ATTR) || box.closest(COVER)) return;
     const text = (box.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 600);
@@ -151,8 +173,10 @@
     const key = 't|' + text.slice(0, 200);
     if (checkedBox.get(box) === key) return;
     checkedBox.set(box, key);
+    box.setAttribute(CHECKING, '');
     judge(key, { kind: 'text', text }, (v) => {
-      if (v === 'yes') S.cover(box, 'result', 'text');
+      box.removeAttribute(CHECKING);
+      if (shouldCover(v, { pictures: false })) S.cover(box, 'result', 'text');
       S.queueScan();
     });
   }
@@ -171,13 +195,16 @@
     if (checkedImg.get(img) === src) return;
     checkedImg.set(img, src);
     const tile = tileFor(img);
+    img.setAttribute(CHECKING, '');
     judge('i|' + src.slice(0, 300), { kind: 'image', image: true, src }, (v) => {
-      if (v === 'yes' && tile) S.cover(tile, 'result', 'image');
+      img.removeAttribute(CHECKING);
+      if (shouldCover(v, { pictures: true }) && tile) S.cover(tile, 'result', 'image');
       S.queueScan();
     });
   }
 
   function scan() {
+    imagesPage = imagesView(location);
     S.coverLinksIn(document, RESULTS);
     document.querySelectorAll(RESULTS).forEach(checkResult);
     document.querySelectorAll('img').forEach(checkPicture);
